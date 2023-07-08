@@ -1,0 +1,30 @@
+{
+    "name": "cbr/collector",
+    "autoload": {
+        "psr-4": {
+            "Cbr\\Collector\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../sdk"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Dmitriy Suniaikin",
+            "email": "dirst.guy@gmail.com"
+        }
+    ],
+    "require": {
+        "doctrine/orm": "^2.15",
+        "symfony/console": "^6.3",
+        "symfony/cache": "^6.3",
+        "doctrine/migrations": "^3.6",
+        "doctrine/dbal": "^3.6",
+        "ramsey/uuid-doctrine": "^2.0",
+        "eljump/exchange-rate-fork": "^1.1",
+        "cbr/sdk": "dev-main"
+    }
+}

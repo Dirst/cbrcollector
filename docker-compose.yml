@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  queuer:
+    user: user
+    build: .
+    volumes:
+      - ./queuer/code:/var/www:cached
+      - ./queuer/run.sh:/docker-init/run.sh
+      - ./sdk:/var/sdk:cached
+  collector:
+    restart: always
+    build: .
+    user: user
+    volumes:
+      - ./collector/code:/var/www:cached
+      - ./sdk:/var/sdk:cached
+      - ./collector/run.sh:/docker-init/run.sh
+      - ./collector/wait-for-it.sh:/docker-init/wait-for-it.sh
+  db:
+    image: mariadb:latest
+    environment:
+      - MYSQL_DATABASE=app
+      - MYSQL_ROOT_PASSWORD=rootroot
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=TRUE
+    volumes:
+      - ./database/my.cnf:/etc/mysql/conf.d/.my.cnf:ro
+  rabbit:
+    image: rabbitmq:3-management
+    restart: always
+  redis:
+    image: redis:latest
+    restart: always

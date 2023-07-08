@@ -1,0 +1,24 @@
+{
+    "name": "cbr/queuer",
+    "autoload": {
+        "psr-4": {
+            "Cbr\\Queuer\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../sdk"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Dmitriy Suniaikin",
+            "email": "dirst.guy@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "^6.3",
+        "cbr/sdk": "dev-main"
+    }
+}
