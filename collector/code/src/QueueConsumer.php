@@ -2,6 +2,7 @@
 
 namespace Cbr\Collector;
 
+use Cbr\Collector\Entity\RateStatEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -31,6 +32,7 @@ class QueueConsumer
             false,
             function (AMQPMessage $message) {
                 $this->collectRateStatForMessage($message);
+                $message->ack();
             }
         );
 
@@ -42,12 +44,20 @@ class QueueConsumer
         /* @var \Cbr\Sdk\Dto\RateCollectorQueueItem $queueItem */
         $queueItem = unserialize($message->getBody());
 
+        $rateStatEntity = $this->entityManager->getRepository(RateStatEntity::class)->findOneBy([
+            'currency' => $queueItem->currencyPair->currencyCode,
+            'baseCurrency' => $queueItem->currencyPair->baseCurrencyCode,
+            'date' => $queueItem->dateTime,
+        ]);
+
+        if ($rateStatEntity) {
+            return;
+        }
+
         $rateStatEntity = $this->rateCollector->getCurrencyRateStatEntity($queueItem);
 
         // @NOTICE can be extracted to interface in order to provide ways to save entity to different storages like files or else.
         $this->entityManager->persist($rateStatEntity);
         $this->entityManager->flush();
-
-        $message->ack();
     }
 }
