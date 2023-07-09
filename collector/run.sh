@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd /var/sdk
+composer install
+
+cd /var/www
 composer install
 
 /docker-init/wait-for-it.sh -t 0 db:3306 -- echo "Database is ready!"
