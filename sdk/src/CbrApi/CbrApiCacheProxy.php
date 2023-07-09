@@ -1,14 +1,16 @@
 <?php
 
-namespace Cbr\Collector\CbrApi;
+namespace Cbr\Sdk\CbrApi;
 
+use CentralBankRussian\ExchangeRate\Collections\CurrencyCollection;
 use CentralBankRussian\ExchangeRate\Collections\CurrencyRateCollection;
 use CentralBankRussian\ExchangeRate\ExchangeRate;
+use CentralBankRussian\ExchangeRate\ReferenceData;
 
 class CbrApiCacheProxy
 {
 
-    public function __construct(protected ExchangeRate $exchangeRate, protected \Redis $redis)
+    public function __construct(protected ExchangeRate $exchangeRate, protected ReferenceData $reference, protected \Redis $redis)
     {
     }
 
@@ -26,6 +28,20 @@ class CbrApiCacheProxy
         $this->redis->set($this->getKeyFromDate($dateTime), serialize($currencyRateCollection));
 
         return $currencyRateCollection;
+    }
+
+    public function getCurrenciesList(): CurrencyCollection
+    {
+        $currencies = $this->redis->get('currencies');
+        if ($currencies) {
+            return unserialize($currencies);
+        }
+
+        $currencies = $this->reference->getCurrencyCodesDaily();
+
+        $this->redis->set('currencies', serialize($currencies));
+
+        return $currencies;
     }
 
     protected function getKeyFromDate(\DateTimeInterface $dateTime): string

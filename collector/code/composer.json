@@ -24,7 +24,6 @@
         "doctrine/migrations": "^3.6",
         "doctrine/dbal": "^3.6",
         "ramsey/uuid-doctrine": "^2.0",
-        "eljump/exchange-rate-fork": "^1.1",
         "cbr/sdk": "dev-main"
     }
 }

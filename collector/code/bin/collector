@@ -4,25 +4,27 @@
 
 require __DIR__.'/../bootstrap.php';
 
-use Cbr\Collector\CbrApi\CbrApiCacheProxy;
 use Cbr\Collector\Command\CollectCommand;
 use Cbr\Collector\QueueConsumer;
-
 use Cbr\Collector\RateCollector;
-use Cbr\Collector\RedisFactory;
 use Cbr\Sdk\AmqpConnectionFactory;
+use Cbr\Sdk\CbrApi\CbrApiCacheProxy;
+use Cbr\Sdk\RedisFactory;
 use CentralBankRussian\ExchangeRate\CBRClient;
 use CentralBankRussian\ExchangeRate\ExchangeRate;
+use CentralBankRussian\ExchangeRate\ReferenceData;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
+$cbrClient = new CBRClient();
 $application->add(
     new CollectCommand(
         new QueueConsumer(
             AmqpConnectionFactory::getStream(),
             new RateCollector(
                 new CbrApiCacheProxy(
-                    new ExchangeRate(new CBRClient()),
+                    new ExchangeRate($cbrClient),
+                    new ReferenceData($cbrClient),
                     RedisFactory::getRedisConnection()
                 )
             ),

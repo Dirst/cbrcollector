@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6dad4d4b9c1d7d44c9e76ff936e81d4",
+    "content-hash": "5eb48507ee6e4435fb288ee86bc34629",
     "packages": [
         {
             "name": "brick/math",
@@ -67,9 +67,11 @@
             "dist": {
                 "type": "path",
                 "url": "../sdk",
-                "reference": "feb731cdc4c6c394bea515907a909e05446d6b25"
+                "reference": "3d83cea37b80fb84653471ddf0ad56921457c5b4"
             },
             "require": {
+                "eljump/exchange-rate-fork": "^1.1",
+                "ext-redis": "*",
                 "php-amqplib/php-amqplib": "^3.5"
             },
             "type": "library",

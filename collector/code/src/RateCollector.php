@@ -2,7 +2,7 @@
 
 namespace Cbr\Collector;
 
-use Cbr\Collector\CbrApi\CbrApiCacheProxy;
+use Cbr\Sdk\CbrApi\CbrApiCacheProxy;
 use Cbr\Sdk\Dto\CurrencyPair;
 use Cbr\Sdk\Dto\RateCollectorQueueItem;
 use Cbr\Collector\Entity\RateStatEntity;

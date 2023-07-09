@@ -5,19 +5,31 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use Cbr\Queuer\Command\QueueCommand;
+use Cbr\Queuer\CurrencyValidator;
 use Cbr\Queuer\Queue\CollectRateTaskQueuer;
 use Cbr\Queuer\Queue\QueueItemsBuilder;
-use Cbr\Queuer\CurrencyValidator;
 use Cbr\Sdk\AmqpConnectionFactory;
+use Cbr\Sdk\CbrApi\CbrApiCacheProxy;
+use Cbr\Sdk\RedisFactory;
+use CentralBankRussian\ExchangeRate\CBRClient;
+use CentralBankRussian\ExchangeRate\ExchangeRate;
+use CentralBankRussian\ExchangeRate\ReferenceData;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
+$cbrClient = new CBRClient();
 $application->add(
     new QueueCommand(
         new CollectRateTaskQueuer(
             AmqpConnectionFactory::getStream(), new QueueItemsBuilder()
         ),
-        new CurrencyValidator()
+        new CurrencyValidator(
+            new CbrApiCacheProxy(
+                new ExchangeRate($cbrClient),
+                new ReferenceData($cbrClient),
+                RedisFactory::getRedisConnection()
+            )
+        )
     )
 );
 $application->run();

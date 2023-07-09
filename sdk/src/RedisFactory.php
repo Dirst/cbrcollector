@@ -1,6 +1,6 @@
 <?php
 
-namespace Cbr\Collector;
+namespace Cbr\Sdk;
 
 class RedisFactory
 {

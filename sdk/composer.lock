@@ -4,8 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f4fc3c90dd2df34ddf5e6ecfc62a947",
+    "content-hash": "3df467e2da190b5eefd0b13a4e5a5eb7",
     "packages": [
+        {
+            "name": "eljump/exchange-rate-fork",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eljump/exchange-rate.git",
+                "reference": "8023c733798fc01cd43f953c3efaf4a147093238"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eljump/exchange-rate/zipball/8023c733798fc01cd43f953c3efaf4a147093238",
+                "reference": "8023c733798fc01cd43f953c3efaf4a147093238",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CentralBankRussian\\ExchangeRate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Drandin",
+                    "email": "idrandin@gmail.com"
+                }
+            ],
+            "description": "Exchange rate of the Central Bank of the Russian Federation. Currency converter. Getting data from the Central Bank's website cbr.ru",
+            "keywords": [
+                "Central Bank of the Russian Federation",
+                "cbr.ru",
+                "currency",
+                "currency converter",
+                "exchange rate",
+                "php"
+            ],
+            "support": {
+                "source": "https://github.com/eljump/exchange-rate/tree/v1.1"
+            },
+            "time": "2023-01-17T11:30:12+00:00"
+        },
         {
             "name": "paragonie/constant_time_encoding",
             "version": "v2.6.3",

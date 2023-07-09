@@ -3,8 +3,8 @@
 namespace Cbr\Queuer\Command;
 
 use Cbr\Queuer\CurrencyValidator;
-use Cbr\Sdk\Dto\CurrencyPair;
 use Cbr\Queuer\Queue\CollectRateTaskQueuer;
+use Cbr\Sdk\Dto\CurrencyPair;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,8 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'queue')]
 class QueueCommand extends Command
 {
-    public function __construct(protected CollectRateTaskQueuer $queuer, protected CurrencyValidator $currencyValidator)
-    {
+    public function __construct(
+        protected CollectRateTaskQueuer $queuer,
+        protected CurrencyValidator $currencyValidator
+    ) {
         parent::__construct();
     }
 
@@ -58,6 +60,10 @@ class QueueCommand extends Command
      */
     protected function validateCurrencyPair(CurrencyPair $currencyPair): void
     {
+        if ($currencyPair->baseCurrencyCode === $currencyPair->currencyCode) {
+            throw new \Exception("Currencies can't be the same");
+        }
+
         if (!$this->currencyValidator->isCurrencyCodeValid($currencyPair->currencyCode)) {
             throw new \Exception("$currencyPair->currencyCode is not valid");
         }
