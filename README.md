@@ -1,8 +1,10 @@
 # Set up
 Pull this repo and run `docker compose up -d`
 
-# Run queuer
-To schedule collection of the data - after all docker services are spinning run:
+After all docker services are spinning you have to wait a bit in order all composer dependencies are installed, before you run queue scheduler:
+
+# Run queue scheduler
+To schedule collection of the data:
 
 `docker compose run queuer php ./bin/collector queue DaysCount currency [base_currency]`
 base currency can be empty (ruble by default).
