@@ -7,7 +7,8 @@ After all docker services are spinning you have to wait a bit in order all compo
 To schedule collection of the data:
 
 `docker compose run queuer php ./bin/collector queue DaysCount currency [base_currency]`
-base currency can be empty (ruble by default).
+
+*base currency can be empty (ruble by default).*
 
 ***Example***:`docker compose run queuer php ./bin/collector queue 180 usd eur`
 
