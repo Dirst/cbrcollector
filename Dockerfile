@@ -23,10 +23,10 @@ ENV PATH /var/www/vendor/bin:$PATH
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN apt-get update && apt-get install -y libxml2-dev
+RUN apt-get update && apt-get install -y libxml2-dev libzip-dev libbz2-dev
 
 RUN pecl install redis
 RUN docker-php-ext-enable redis
-RUN docker-php-ext-install sockets pdo_mysql soap
+RUN docker-php-ext-install sockets pdo_mysql soap zip
 
 CMD ["/docker-init/run.sh"]
